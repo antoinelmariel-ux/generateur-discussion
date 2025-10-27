@@ -1,0 +1,338 @@
+:root {
+  color-scheme: light dark;
+  --color-bg: #0f172a;
+  --color-surface: rgba(15, 23, 42, 0.8);
+  --color-surface-light: rgba(255, 255, 255, 0.1);
+  --color-surface-strong: rgba(255, 255, 255, 0.18);
+  --color-text: #f8fafc;
+  --color-muted: #cbd5f5;
+  --color-primary: #38bdf8;
+  --color-success: #22c55e;
+  --color-danger: #f87171;
+  --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.4);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --font-stack: "Inter", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-stack);
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(30, 64, 175, 0.95));
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+main {
+  width: min(1100px, 92vw);
+  margin: 0 auto 48px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.app-header {
+  text-align: center;
+  padding: 48px 16px 0;
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+}
+
+.app-subtitle {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.toolbar {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.toolbar-info {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.hint {
+  color: var(--color-muted);
+}
+
+.toolbar-help {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.status {
+  min-height: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--color-success);
+}
+
+.status.info {
+  color: var(--color-muted);
+}
+
+.status.error {
+  color: var(--color-danger);
+}
+
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: var(--color-surface-light);
+  color: var(--color-text);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  outline: none;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(148, 163, 184, 0.2);
+  background: var(--color-surface-strong);
+}
+
+.btn.primary {
+  background: var(--color-primary);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.btn.success {
+  background: var(--color-success);
+  color: #052e16;
+  font-weight: 600;
+}
+
+.btn.danger {
+  background: var(--color-danger);
+  color: #450a0a;
+  font-weight: 600;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.file-import {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#importFile {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.cards-area {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  min-height: 320px;
+}
+
+.cards-area.drag-active {
+  outline: 3px dashed var(--color-primary);
+  outline-offset: -16px;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.empty-placeholder {
+  margin: 0;
+  padding: 48px 24px;
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--color-muted);
+}
+
+.card-editor {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: var(--radius-md);
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.35);
+  overflow: hidden;
+}
+
+.card-editor__summary {
+  margin: 0;
+  list-style: none;
+  padding: 20px 24px;
+  font-weight: 600;
+  background: rgba(148, 163, 184, 0.12);
+  cursor: pointer;
+}
+
+.card-editor[open] .card-editor__summary {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.card-editor__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card-editor__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.form-field span {
+  color: var(--color-muted);
+}
+
+.form-field input,
+.form-field textarea {
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--color-text);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 44px;
+}
+
+.form-field textarea {
+  line-height: 1.4;
+}
+
+.card-editor__variations {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.variations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.variation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.empty-variations {
+  margin: 0;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.variation-item {
+  background: rgba(148, 163, 184, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.variation-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.variation-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.card-editor__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reorder-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.separator {
+  opacity: 0.45;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .card-editor__fields,
+  .variation-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .card-editor__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .variation-actions {
+    justify-content: space-between;
+  }
+}
