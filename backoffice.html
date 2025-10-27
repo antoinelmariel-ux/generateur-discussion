@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backoffice des cartes - Générateur de discussion</title>
+  <link rel="stylesheet" href="backoffice.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Backoffice des cartes</h1>
+    <p class="app-subtitle">Importez, éditez et exportez facilement le contenu des cartes de discussion.</p>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="Actions rapides">
+      <div class="toolbar-row">
+        <button class="btn primary" type="button" id="addCardBtn">Ajouter une carte</button>
+        <button class="btn" type="button" id="expandAllBtn">Tout déplier</button>
+        <button class="btn" type="button" id="collapseAllBtn">Tout replier</button>
+      </div>
+      <div class="toolbar-row">
+        <label class="file-import btn" for="importFile">Importer un fichier</label>
+        <input type="file" id="importFile" accept=".json,.js" aria-label="Importer un fichier de cartes" />
+        <button class="btn success" type="button" id="downloadBtn">Télécharger le fichier des cartes</button>
+      </div>
+      <div class="toolbar-row toolbar-info">
+        <span id="cardCount" aria-live="polite">0 carte</span>
+        <span class="separator" aria-hidden="true">•</span>
+        <span class="hint">Le fichier exporté est directement compatible avec l'application (cards_data.js).</span>
+      </div>
+      <p class="toolbar-help">Vous pouvez glisser-déposer un fichier JSON ou <code>cards_data.js</code> sur la zone centrale pour charger son contenu.</p>
+      <div class="status" id="statusMessage" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="dropZone" class="cards-area" aria-label="Liste des cartes">
+      <p class="empty-placeholder" id="emptyState">Ajoutez votre première carte ou importez un fichier existant pour commencer.</p>
+      <div id="cardsContainer" class="cards-container"></div>
+    </section>
+  </main>
+
+  <template id="cardTemplate">
+    <details class="card-editor" open>
+      <summary class="card-editor__summary"></summary>
+      <div class="card-editor__body">
+        <div class="card-editor__fields">
+          <label class="form-field">
+            <span>Catégorie</span>
+            <input type="text" name="category" required />
+          </label>
+          <label class="form-field">
+            <span>Situation présentée</span>
+            <textarea name="content" rows="4" required></textarea>
+          </label>
+          <label class="form-field">
+            <span>Recommandations des experts</span>
+            <textarea name="advice" rows="4"></textarea>
+          </label>
+        </div>
+        <div class="card-editor__variations" aria-label="Variations de la carte">
+          <div class="variations-header">
+            <h3>Variations</h3>
+            <button type="button" class="btn" data-action="add-variation">Ajouter une variation</button>
+          </div>
+          <div class="variation-list" data-role="variation-list"></div>
+        </div>
+        <div class="card-editor__actions">
+          <div class="reorder-actions">
+            <button type="button" class="btn" data-action="move-up" title="Remonter la carte">▲</button>
+            <button type="button" class="btn" data-action="move-down" title="Descendre la carte">▼</button>
+          </div>
+          <button type="button" class="btn danger" data-action="delete-card">Supprimer la carte</button>
+        </div>
+      </div>
+    </details>
+  </template>
+
+  <template id="variationTemplate">
+    <article class="variation-item">
+      <div class="variation-fields">
+        <label class="form-field">
+          <span>Titre de la variation</span>
+          <input type="text" name="variationTitle" />
+        </label>
+        <label class="form-field">
+          <span>Contenu de la variation</span>
+          <textarea name="variationContent" rows="3" required></textarea>
+        </label>
+      </div>
+      <div class="variation-actions">
+        <button type="button" class="btn" data-action="move-variation-up" title="Remonter la variation">▲</button>
+        <button type="button" class="btn" data-action="move-variation-down" title="Descendre la variation">▼</button>
+        <button type="button" class="btn danger" data-action="delete-variation" title="Supprimer la variation">Supprimer</button>
+      </div>
+    </article>
+  </template>
+
+  <footer class="app-footer">Version 1.2.0</footer>
+
+  <script src="cards_data.js"></script>
+  <script src="backoffice.js"></script>
+</body>
+</html>
