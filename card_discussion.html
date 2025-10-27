@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lanceur de Discussion - Jeu de Cartes</title>
+  <link rel="stylesheet" href="card_discussion.css">
+</head>
+<body>
+  <!-- Particules flottantes -->
+  <div class="floating-particles"></div>
+
+  <h1 class="title">🐥 Prêts pour le bébé ?</h1>
+
+  <div class="game-container">
+    <!-- Tas de cartes -->
+    <div class="card-deck" id="cardDeck" role="button" tabindex="0" aria-label="Piocher une nouvelle carte" onclick="drawCard()">
+      <div class="deck-card"><div class="deck-icon">?</div></div>
+      <div class="deck-card"><div class="deck-icon">?</div></div>
+      <div class="deck-card"><div class="deck-icon">?</div></div>
+      <div class="deck-counter" id="cardCounter" aria-live="polite" aria-atomic="true">72</div>
+    </div>
+
+    <!-- Carte de discussion avec effet flip -->
+    <div class="card-container" id="cardContainer">
+      <button class="expert-button" id="expertAdviceBtn" type="button" title="Voir les recommandations des experts" aria-label="Afficher les recommandations des experts">💡</button>
+      <div class="discussion-card" id="discussionCard" role="button" tabindex="0" aria-label="Carte de discussion">
+        <!-- Face avant (dos de carte) -->
+        <div class="card-face card-front">
+          <div class="card-front-content">
+            <div class="card-front-text">Question</div>
+          </div>
+          <div class="flip-hint">Cliquez pour révéler 👉</div>
+        </div>
+
+        <!-- Face arrière (contenu) -->
+        <div class="card-face card-back">
+          <div class="card-category" id="cardCategory">Bienvenue</div>
+          <div class="card-variation-label" id="cardVariationLabel" aria-live="polite"></div>
+          <div class="card-content" id="cardContent">
+            Cliquez sur cette carte ou sur le tas de cartes pour découvrir votre première question de discussion !
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="visually-hidden" id="cardStatus" aria-live="polite"></p>
+
+  <div class="controls">
+    <button class="btn btn-primary" onclick="drawCard()">Nouvelle Carte</button>
+    <div class="controls-menu">
+      <button class="btn btn-menu-toggle" id="advancedMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="advancedMenu" aria-label="Ouvrir le menu d'actions">
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Menu d'actions</span>
+      </button>
+      <div class="menu-dropdown" id="advancedMenu" role="menu">
+        <button class="btn menu-action" role="menuitem" onclick="resetDeck()">Réinitialiser</button>
+        <button class="btn menu-action" id="openThemeSelector" type="button" role="menuitem">Choisir les thématiques</button>
+        <button class="btn menu-action" id="openFavorites" type="button" role="menuitem">Mes favoris experts</button>
+        <button class="btn menu-action" id="saveSession" type="button" role="menuitem">Enregistrer la session</button>
+        <button class="btn menu-action" id="loadSession" type="button" role="menuitem">Charger une session</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="sessionFileInput" accept="application/json" class="visually-hidden" aria-hidden="true" tabindex="-1">
+
+  <div class="modal-overlay" id="themeSelectorModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="themeSelectorTitle">
+      <button class="modal-close" id="closeThemeSelector" type="button" aria-label="Fermer la sélection des thématiques">×</button>
+      <h2 class="modal-title" id="themeSelectorTitle">Choisissez vos thématiques</h2>
+      <p class="modal-description">Sélectionnez les thématiques que vous souhaitez voir apparaître dans votre partie. Vous pourrez modifier ce choix à tout moment.</p>
+      <div class="select-all">
+        <label for="selectAllThemes"><input type="checkbox" id="selectAllThemes" checked> Tout sélectionner</label>
+      </div>
+      <div class="theme-options" id="themeOptions"></div>
+      <div class="modal-error" id="themeError"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="applyThemeSelection">Valider la sélection</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="expertAdviceModal" aria-hidden="true">
+    <div class="modal-content expert-modal-content" role="dialog" aria-modal="true" aria-labelledby="expertAdviceTitle">
+      <div class="expert-situation">
+        <div class="expert-section-title">Situation</div>
+        <div class="expert-category" id="expertAdviceCategory"></div>
+        <div class="expert-variation" id="expertAdviceVariation"></div>
+        <p class="expert-situation-text" id="expertAdviceSituation"></p>
+      </div>
+      <div class="expert-advice">
+        <div class="expert-section-title" id="expertAdviceTitle">Recommandations des experts</div>
+        <div class="expert-advice-text" id="expertAdviceContent"></div>
+      </div>
+      <div class="expert-favorite" id="expertFavoriteSection">
+        <p class="expert-favorite-text">Gardez cette recommandation sous la main pour vos prochaines sessions.</p>
+        <button class="favorite-heart" id="toggleFavorite" type="button" aria-pressed="false" aria-label="Ajouter cette recommandation aux favoris">
+          <span class="heart-icon" aria-hidden="true">♡</span>
+        </button>
+        <p class="expert-favorite-status" id="favoriteStatus" aria-live="polite"></p>
+      </div>
+      <div class="expert-mastery" id="expertMasterySection">
+        <div class="expert-section-title">Maîtrise du principe</div>
+        <p class="expert-mastery-text">Ce principe vous semble-t-il acquis dans cette situation ?</p>
+        <div class="expert-mastery-actions">
+          <button class="btn mastery-action" type="button" data-mastered="false" aria-pressed="false">Je veux encore pratiquer</button>
+          <button class="btn mastery-action" type="button" data-mastered="true" aria-pressed="false">Je maîtrise ce principe</button>
+        </div>
+        <p class="expert-mastery-status" id="expertMasteryStatus" aria-live="polite"></p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="closeExpertAdvice" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="favoritesModal" aria-hidden="true">
+    <div class="modal-content favorites-modal-content" role="dialog" aria-modal="true" aria-labelledby="favoritesTitle">
+      <button class="modal-close" id="closeFavorites" type="button" aria-label="Fermer la liste des favoris">×</button>
+      <h2 class="modal-title" id="favoritesTitle">Mes recommandations favorites</h2>
+      <p class="modal-description">Accédez en un clic aux situations expertes que vous avez enregistrées.</p>
+      <div class="favorites-list" id="favoritesList" role="list"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="closeFavoritesFooter" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Données des cartes -->
+  <script src="cards_data.js"></script>
+  <script src="card_discussion.js"></script>
+</body>
+</html>
