@@ -16,8 +16,8 @@ class DiscussionCardGame {
     this.currentCard = null;
     this.activeExpertCard = null;
     this.welcomeCard = {
-      category:'Bienvenue',
-      content:'Cliquez sur le tas de cartes pour découvrir votre première question de discussion !'
+      category:'Introduction',
+      content:'Cliquez sur le tas de cartes pour explorer des situations de management en pharmacie hospitalière.'
     };
     this.cardEl = document.getElementById('discussionCard');
     this.cardCategoryEl = document.getElementById('cardCategory');
@@ -89,7 +89,7 @@ class DiscussionCardGame {
     this.hideExpertAdvice();
     this.clearExpertAdvicePanel();
     this.setExpertButtonState(false);
-    this.updateStatus('Carte de bienvenue affichée.');
+    this.updateStatus('Carte d\'introduction affichée.');
   }
 
   prepareCards(cardDefinitions){

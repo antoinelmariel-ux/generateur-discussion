@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lanceur de Discussion - Jeu de Cartes</title>
+  <title>Générateur de discussion - Management pharmaceutique</title>
   <link rel="stylesheet" href="card_discussion.css">
 </head>
 <body>
   <!-- Particules flottantes -->
   <div class="floating-particles"></div>
 
-  <h1 class="title">🐥 Prêts pour le bébé ?</h1>
+  <h1 class="title">Discussions management pour pharmaciens hospitaliers</h1>
 
   <div class="game-container">
     <!-- Tas de cartes -->
@@ -18,7 +18,7 @@
       <div class="deck-card"><div class="deck-icon">?</div></div>
       <div class="deck-card"><div class="deck-icon">?</div></div>
       <div class="deck-card"><div class="deck-icon">?</div></div>
-      <div class="deck-counter" id="cardCounter" aria-live="polite" aria-atomic="true">72</div>
+      <div class="deck-counter" id="cardCounter" aria-live="polite" aria-atomic="true">5</div>
     </div>
 
     <!-- Carte de discussion avec effet flip -->
@@ -35,10 +35,10 @@
 
         <!-- Face arrière (contenu) -->
         <div class="card-face card-back">
-          <div class="card-category" id="cardCategory">Bienvenue</div>
+          <div class="card-category" id="cardCategory">Introduction</div>
           <div class="card-variation-label" id="cardVariationLabel" aria-live="polite"></div>
           <div class="card-content" id="cardContent">
-            Cliquez sur cette carte ou sur le tas de cartes pour découvrir votre première question de discussion !
+            Cliquez sur cette carte ou sur le tas de cartes pour explorer des situations de management en pharmacie hospitalière.
           </div>
         </div>
       </div>
@@ -129,6 +129,7 @@
   </div>
 
   <!-- Données des cartes -->
+  <footer class="app-footer" aria-label="Version de l'application">Version 1.1.0</footer>
   <script src="cards_data.js"></script>
   <script src="card_discussion.js"></script>
 </body>
