@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.1";
+const APP_VERSION = "v1.0.2";
 
 const exampleConfig = {
-  version: "1.0.1",
+  version: "1.0.2",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-transparency", title: "Transparence", description: "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.", order: 1, isActive: true },
@@ -45,6 +45,7 @@ let appConfig = cloneConfig(exampleConfig);
 let playedMatchingIds = new Set();
 let currentDraw = null;
 let implicationVisible = false;
+let lastFocusedElement = null;
 
 const elements = {};
 
@@ -65,8 +66,10 @@ function cacheElements() {
   elements.drawAnotherButton = document.querySelector("#draw-another-button");
   elements.resetSessionButton = document.querySelector("#reset-session-button");
   elements.showImplicationButton = document.querySelector("#show-implication-button");
-  elements.implicationPanel = document.querySelector("#implication-panel");
+  elements.implicationModal = document.querySelector("#implication-modal");
+  elements.closeImplicationButton = document.querySelector("#close-implication-button");
   elements.implicationText = document.querySelector("#implication-text");
+  elements.appVersion = document.querySelector("#app-version");
   elements.principleCount = document.querySelector("#principle-count");
   elements.activityCount = document.querySelector("#activity-count");
   elements.principleCard = document.querySelector("#principle-card");
@@ -97,6 +100,17 @@ function bindEvents() {
   elements.drawAnotherButton.addEventListener("click", drawPair);
   elements.resetSessionButton.addEventListener("click", resetSession);
   elements.showImplicationButton.addEventListener("click", showImplication);
+  elements.closeImplicationButton.addEventListener("click", closeImplication);
+  elements.implicationModal.addEventListener("click", (event) => {
+    if (event.target === elements.implicationModal) {
+      closeImplication();
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !elements.implicationModal.hidden) {
+      closeImplication();
+    }
+  });
   elements.exportButton.addEventListener("click", exportConfig);
   elements.importInput.addEventListener("change", importConfig);
   elements.principleForm.addEventListener("submit", savePrinciple);
@@ -135,6 +149,7 @@ function validateOrFallback() {
 function updateAllViews() {
   renderGame();
   renderBackoffice();
+  elements.appVersion.textContent = APP_VERSION;
   const eligibleCount = getEligibleMatchings().length;
   elements.homeDataStatus.textContent = eligibleCount > 0 ? `${eligibleCount} associations jouables disponibles.` : "Aucune paire valide disponible.";
 }
@@ -148,8 +163,7 @@ function getEligibleMatchings() {
 function drawPair() {
   const eligibleMatchings = getEligibleMatchings();
   const remainingMatchings = eligibleMatchings.filter((matching) => !playedMatchingIds.has(matching.id));
-  elements.implicationPanel.hidden = true;
-  implicationVisible = false;
+  closeImplication(false);
 
   if (eligibleMatchings.length === 0) {
     currentDraw = null;
@@ -179,8 +193,7 @@ function drawPair() {
 function resetSession() {
   playedMatchingIds = new Set();
   currentDraw = null;
-  implicationVisible = false;
-  elements.implicationPanel.hidden = true;
+  closeImplication(false);
   setGameMessage("Session réinitialisée. Vous pouvez piocher une nouvelle paire.", "success");
   renderGame();
 }
@@ -190,9 +203,22 @@ function showImplication() {
     return;
   }
   implicationVisible = true;
+  lastFocusedElement = document.activeElement;
   const implication = currentDraw.matching.expertImplication.trim();
   elements.implicationText.textContent = implication || "Aucune implication experte n'est renseignée pour cette association. Complétez-la dans le backoffice.";
-  elements.implicationPanel.hidden = false;
+  elements.implicationModal.hidden = false;
+  document.body.classList.add("modal-open");
+  elements.closeImplicationButton.focus();
+}
+
+function closeImplication(restoreFocus = true) {
+  implicationVisible = false;
+  elements.implicationModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  if (restoreFocus && lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+    lastFocusedElement.focus();
+  }
+  lastFocusedElement = null;
 }
 
 function renderGame() {
@@ -226,9 +252,6 @@ function renderGame() {
   elements.activityCardTitle.textContent = currentDraw.activity.title;
   elements.activityCardDescription.textContent = currentDraw.activity.description;
 
-  if (implicationVisible) {
-    showImplication();
-  }
 }
 
 function renderBackoffice() {
