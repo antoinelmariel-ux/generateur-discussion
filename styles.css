@@ -815,3 +815,122 @@ textarea {
     justify-content: flex-start;
   }
 }
+
+.category-change-button {
+  padding: 0.5rem 0.8rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  box-shadow: none;
+  font-size: 0.88rem;
+}
+
+.category-change-button:not(:disabled):hover {
+  color: var(--primary-dark);
+  background: #eef1f6;
+}
+
+#backoffice-view {
+  font-size: 0.92rem;
+}
+
+#backoffice-view .section-heading {
+  margin-bottom: 1.25rem;
+}
+
+#backoffice-view .section-heading h2 {
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+}
+
+#backoffice-view .section-heading p {
+  margin: 0.35rem 0 0;
+}
+
+#backoffice-view .io-panel,
+#backoffice-view .tabs,
+#backoffice-view .editor-form,
+#backoffice-view .admin-list,
+#backoffice-view .tab-panel {
+  margin-bottom: 0.7rem;
+}
+
+#backoffice-view .io-panel,
+#backoffice-view .editor-form,
+#backoffice-view .admin-item {
+  padding: 0.7rem;
+  border-radius: 16px;
+}
+
+#backoffice-view .hero-actions,
+#backoffice-view .game-actions,
+#backoffice-view .form-actions,
+#backoffice-view .io-panel,
+#backoffice-view .tabs,
+#backoffice-view .admin-list,
+#backoffice-view .admin-item,
+#backoffice-view .admin-item-actions {
+  gap: 0.45rem;
+}
+
+#backoffice-view .form-grid {
+  gap: 0.65rem;
+}
+
+#backoffice-view label {
+  gap: 0.25rem;
+  font-size: 0.88rem;
+}
+
+#backoffice-view input,
+#backoffice-view textarea,
+#backoffice-view select {
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+#backoffice-view textarea {
+  min-height: 70px;
+}
+
+#backoffice-view .primary-button,
+#backoffice-view .secondary-button,
+#backoffice-view .ghost-button,
+#backoffice-view .tab-button,
+#backoffice-view .icon-button {
+  padding: 0.48rem 0.75rem;
+  font-size: 0.86rem;
+}
+
+#backoffice-view .form-actions {
+  margin-top: 0.65rem;
+}
+
+#backoffice-view .admin-item {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+#backoffice-view .admin-item h3 {
+  font-size: 1rem;
+}
+
+#backoffice-view .admin-item p {
+  margin: 0.3rem 0;
+  font-size: 0.86rem;
+}
+
+#backoffice-view .meta,
+#backoffice-view .badge {
+  font-size: 0.76rem;
+}
+
+@media (max-width: 760px) {
+  #backoffice-view .admin-item,
+  #backoffice-view .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #backoffice-view .admin-item-actions {
+    justify-content: flex-start;
+  }
+}
