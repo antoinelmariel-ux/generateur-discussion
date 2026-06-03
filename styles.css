@@ -233,6 +233,24 @@ h3 {
   color: var(--success);
 }
 
+.reset-session-button {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  box-shadow: none;
+  font-size: 1.25rem;
+}
+
+.reset-session-button:not(:disabled):hover {
+  color: var(--primary-dark);
+  background: #eef1f6;
+}
+
 
 .game-table {
   display: grid;
@@ -328,17 +346,6 @@ h3 {
   background: rgba(255, 255, 255, 0.2);
 }
 
-.deck-count {
-  display: inline-grid;
-  width: 3.5rem;
-  height: 3.5rem;
-  place-items: center;
-  margin-bottom: 1rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.22);
-  font-size: 1.35rem;
-  font-weight: 950;
-}
 
 .deck-label,
 .deck-hint {
