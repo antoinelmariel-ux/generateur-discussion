@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.5";
+const APP_VERSION = "v1.0.6";
 
 const exampleConfig = {
-  version: "1.0.5",
+  version: "1.0.6",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-patient-benefit-legitimate-purpose", title: "Patient benefit and legitimate purpose", description: "Toute interaction avec un HCP doit avoir une finalité légitime et avoir pour but le bénéfice des patients. Les HCP ne peuvent être sollicités, soutenus ou rémunérés que lorsqu’il existe un besoin réel et cohérent avec cette finalité.", order: 1, isActive: true },
@@ -46,6 +46,7 @@ let playedMatchingIds = new Set();
 let currentDraw = null;
 let implicationVisible = false;
 let lastFocusedElement = null;
+let selectedActivityCategories = new Set();
 
 const elements = {};
 
@@ -54,12 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   validateOrFallback();
   updateAllViews();
-  showView("home");
+  showView(getInitialView());
 });
 
 function cacheElements() {
   elements.views = document.querySelectorAll(".view");
-  elements.homeDataStatus = document.querySelector("#home-data-status");
+  elements.activityCategoryOptions = document.querySelector("#activity-category-options");
+  elements.selectAllCategoriesButton = document.querySelector("#select-all-categories-button");
   elements.gameStatus = document.querySelector("#game-status");
   elements.backofficeMessage = document.querySelector("#backoffice-message");
   elements.drawPairButton = document.querySelector("#draw-pair-button");
@@ -92,6 +94,7 @@ function bindEvents() {
   document.querySelectorAll("[data-view-link]").forEach((button) => {
     button.addEventListener("click", () => showView(button.dataset.viewLink));
   });
+  elements.selectAllCategoriesButton.addEventListener("click", selectAllActivityCategories);
   document.querySelectorAll("[data-draw-proxy]").forEach((button) => button.addEventListener("click", drawPair));
   elements.drawPairButton.addEventListener("click", drawPair);
   elements.resetSessionButton.addEventListener("click", resetSession);
@@ -122,6 +125,11 @@ function showView(viewName) {
   elements.views.forEach((view) => view.classList.toggle("is-active", view.id === `${viewName}-view`));
 }
 
+function getInitialView() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has("backoffice") || params.get("view") === "backoffice" ? "backoffice" : "home";
+}
+
 function showTab(tabName) {
   document.querySelectorAll("[data-tab]").forEach((button) => {
     const isActive = button.dataset.tab === tabName;
@@ -143,17 +151,83 @@ function validateOrFallback() {
 }
 
 function updateAllViews() {
+  syncSelectedActivityCategories();
+  renderHomeCategorySelector();
   renderGame();
   renderBackoffice();
   elements.appVersion.textContent = APP_VERSION;
-  const eligibleCount = getEligibleMatchings().length;
-  elements.homeDataStatus.textContent = eligibleCount > 0 ? `${eligibleCount} associations jouables disponibles.` : "Aucune paire valide disponible.";
 }
 
 function getEligibleMatchings() {
   const activePrincipleIds = new Set(appConfig.principles.filter((principle) => principle.isActive).map((principle) => principle.id));
-  const activeActivityIds = new Set(appConfig.activities.filter((activity) => activity.isActive).map((activity) => activity.id));
+  const activeActivityIds = new Set(
+    appConfig.activities
+      .filter((activity) => activity.isActive && selectedActivityCategories.has(activity.category))
+      .map((activity) => activity.id)
+  );
   return appConfig.matchings.filter((matching) => matching.isActive && activePrincipleIds.has(matching.principleId) && activeActivityIds.has(matching.activityId));
+}
+
+function getActivityCategories() {
+  return [...new Set(appConfig.activities.filter((activity) => activity.isActive).map((activity) => activity.category))].sort((a, b) => a.localeCompare(b, "fr"));
+}
+
+function syncSelectedActivityCategories() {
+  const availableCategories = getActivityCategories();
+  if (selectedActivityCategories.size === 0) {
+    selectedActivityCategories = new Set(availableCategories);
+    return;
+  }
+
+  selectedActivityCategories = new Set(availableCategories.filter((category) => selectedActivityCategories.has(category)));
+  if (selectedActivityCategories.size === 0 && availableCategories.length > 0) {
+    selectedActivityCategories = new Set(availableCategories);
+  }
+}
+
+function renderHomeCategorySelector() {
+  const categories = getActivityCategories();
+  elements.selectAllCategoriesButton.disabled = categories.length === 0 || selectedActivityCategories.size === categories.length;
+  elements.activityCategoryOptions.innerHTML = categories.length > 0
+    ? categories.map((category) => categoryOptionTemplate(category)).join("")
+    : '<p class="empty-selector-message">Aucune catégorie active disponible.</p>';
+  elements.activityCategoryOptions.querySelectorAll("[data-activity-category]").forEach((input) => {
+    input.addEventListener("change", toggleActivityCategory);
+  });
+}
+
+function categoryOptionTemplate(category) {
+  const categoryId = `activity-category-${createId("option", category)}`;
+  return `
+    <label class="category-option" for="${categoryId}">
+      <input id="${categoryId}" type="checkbox" value="${escapeHtml(category)}" data-activity-category ${selectedActivityCategories.has(category) ? "checked" : ""} />
+      <span>${escapeHtml(category)}</span>
+    </label>
+  `;
+}
+
+function toggleActivityCategory(event) {
+  const category = event.target.value;
+  if (event.target.checked) {
+    selectedActivityCategories.add(category);
+  } else {
+    selectedActivityCategories.delete(category);
+  }
+  resetSessionAfterCategoryChange();
+}
+
+function selectAllActivityCategories() {
+  selectedActivityCategories = new Set(getActivityCategories());
+  resetSessionAfterCategoryChange();
+}
+
+function resetSessionAfterCategoryChange() {
+  playedMatchingIds = new Set();
+  currentDraw = null;
+  closeImplication(false);
+  setGameMessage("La sélection de catégories a été mise à jour. Vous pouvez piocher une nouvelle paire.", "success");
+  renderHomeCategorySelector();
+  renderGame();
 }
 
 function drawPair() {

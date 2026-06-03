@@ -1,6 +1,6 @@
 # Become the boss of ethical interactions with HCPs
 
-Version application : **v1.0.5**
+Version application : **v1.0.6**
 
 ## Objectif
 
@@ -10,7 +10,7 @@ L'application fonctionne sans serveur, sans backend, sans base de données, sans
 
 ## Fonctionnalités V1
 
-- Écran d'accueil sans header ni footer, avec lancement du jeu et accès au backoffice.
+- Écran d'accueil avec sélection des catégories de cartes Activités et lancement du jeu.
 - Espace Jeu avec deux tas de cartes : **Principes** et **Activités**.
 - Tirage aléatoire d'une paire valide Principe / Activité.
 - Exclusion des paires déjà piochées pendant la session courante.
@@ -18,7 +18,7 @@ L'application fonctionne sans serveur, sans backend, sans base de données, sans
 - Révélation de l'implication experte associée au couple tiré.
 - État de fin lorsque toutes les paires disponibles ont été jouées.
 - Réinitialisation de session.
-- Backoffice local avec administration des principes, activités et associations.
+- Backoffice local accessible via un paramètre d'URL, avec administration des principes, activités et associations.
 - Import d'un fichier JSON de configuration.
 - Export d'un fichier JSON conforme au modèle `AppConfig`.
 - Jeu de données d'exemple immédiatement utilisable dans `ethical-quizz-data.example.json`.
@@ -28,10 +28,11 @@ L'application fonctionne sans serveur, sans backend, sans base de données, sans
 Aucune installation n'est nécessaire.
 
 1. Ouvrir `index.html` dans un navigateur moderne.
-2. Cliquer sur **Commencer**.
-3. Piocher une paire de cartes.
-4. Cliquer sur **Voir les implications**.
-5. Utiliser le **Backoffice** pour modifier, importer ou exporter les contenus.
+2. Sélectionner toutes les catégories de cartes Activités, ou seulement certaines catégories.
+3. Cliquer sur **Commencer**.
+4. Piocher une paire de cartes.
+5. Cliquer sur **Voir les implications**.
+6. Ouvrir `index.html?backoffice` ou `index.html?view=backoffice` pour utiliser le **Backoffice**.
 
 > Les données d'exemple sont aussi embarquées dans `app.js` afin que l'application reste utilisable en ouverture directe `file://`.
 
@@ -48,7 +49,7 @@ Aucune installation n'est nécessaire.
 
 ```json
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "updatedAt": "2026-06-03T00:00:00.000Z",
   "principles": [
     {
