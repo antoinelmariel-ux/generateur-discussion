@@ -1,6 +1,6 @@
 # Become the boss of ethical interactions with HCPs
 
-Version application : **v1.0.10**
+Version application : **v1.0.11**
 
 ## Objectif
 
@@ -21,7 +21,7 @@ L'application fonctionne sans serveur, sans backend, sans base de données, sans
 - Backoffice local accessible via un paramètre d'URL, avec administration des principes, activités et associations.
 - Import d'un fichier JSON de configuration.
 - Export d'un fichier JSON conforme au modèle `AppConfig`.
-- Jeu de données d'exemple immédiatement utilisable dans `ethical-quizz-data.example.json`.
+- Jeu de données d'exemple immédiatement utilisable dans `data/ethical-quizz-data.example.json`.
 
 ## Lancer l'application
 
@@ -34,22 +34,22 @@ Aucune installation n'est nécessaire.
 5. Cliquer sur **Voir les implications**.
 6. Ouvrir `index.html?backoffice` ou `index.html?view=backoffice` pour utiliser le **Backoffice**.
 
-> Les données d'exemple sont aussi embarquées dans `app.js` afin que l'application reste utilisable en ouverture directe `file://`.
+> Les données d'exemple sont aussi embarquées dans `assets/js/app.js` afin que l'application reste utilisable en ouverture directe `file://`.
 
 ## Fichiers
 
 - `index.html` : structure de la SPA, écrans Accueil, Jeu et Backoffice.
-- `styles.css` : styles responsive, cartes, animations et formulaires.
-- `app.js` : données fallback, logique métier, rendu et import/export JSON.
-- `ethical-quizz-data.example.json` : configuration d'exemple réutilisable.
-- `README.md` : documentation de la V1.
-- `AGENTS.md` : conventions de contribution pour les agents.
+- `assets/css/styles.css` : styles responsive, cartes, animations et formulaires.
+- `assets/js/app.js` : données fallback, logique métier, rendu et import/export JSON.
+- `data/ethical-quizz-data.example.json` : configuration d'exemple réutilisable.
+- `docs/README.md` : documentation de la V1.
+- `docs/AGENTS.md` : conventions de contribution pour les agents.
 
 ## Modèle JSON
 
 ```json
 {
-  "version": "1.0.10",
+  "version": "1.0.11",
   "updatedAt": "2026-06-03T00:00:00.000Z",
   "principles": [
     {
@@ -95,7 +95,7 @@ Aucune installation n'est nécessaire.
 - Accueil → Jeu → tirage → implication → nouveau tirage → fin de session.
 - Vérifier qu'une paire ne revient pas pendant une session.
 - Réinitialiser la session et vérifier que les paires redeviennent disponibles.
-- Importer `ethical-quizz-data.example.json` depuis le backoffice.
+- Importer `data/ethical-quizz-data.example.json` depuis le backoffice.
 - Importer un JSON invalide et vérifier que l'application reste stable.
 - Créer un principe, une activité et une association, puis exporter le JSON.
 - Tester l'affichage sur mobile et desktop.
