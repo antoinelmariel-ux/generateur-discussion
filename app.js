@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.3";
+const APP_VERSION = "v1.0.4";
 
 const exampleConfig = {
-  version: "1.0.3",
+  version: "1.0.4",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-transparency", title: "Transparence", description: "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.", order: 1, isActive: true },
