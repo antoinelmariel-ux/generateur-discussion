@@ -37,7 +37,6 @@
             <div class="deck-rail deck-rail-left">
               <button id="draw-pair-button" class="deck-card principle-deck" type="button">
                 <span class="deck-card-corner">P</span>
-                <span class="deck-count" id="principle-count">0</span>
                 <span class="deck-label">Pioche Principes</span>
                 <span class="deck-hint">Cliquer pour piocher</span>
               </button>
@@ -79,7 +78,6 @@
             <div class="deck-rail deck-rail-right">
               <button class="deck-card activity-deck" type="button" data-draw-proxy>
                 <span class="deck-card-corner">A</span>
-                <span class="deck-count" id="activity-count">0</span>
                 <span class="deck-label">Pioche Activités</span>
                 <span class="deck-hint">Paire valide garantie</span>
               </button>
@@ -88,8 +86,7 @@
 
           <div class="game-actions">
             <button id="show-implication-button" class="primary-button" type="button" disabled>Voir les implications</button>
-            <button id="draw-another-button" class="secondary-button" type="button">Piocher une autre paire</button>
-            <button id="reset-session-button" class="ghost-button" type="button">Réinitialiser la session</button>
+            <button id="reset-session-button" class="icon-button reset-session-button" type="button" aria-label="Réinitialiser la session" title="Réinitialiser la session">↻</button>
           </div>
 
           <div id="implication-modal" class="modal-backdrop" hidden>
@@ -179,7 +176,7 @@
       </main>
 
       <footer class="app-footer">
-        <span>Version <strong id="app-version">v1.0.2</strong></span>
+        <span>Version <strong id="app-version">v1.0.3</strong></span>
       </footer>
     </div>
 

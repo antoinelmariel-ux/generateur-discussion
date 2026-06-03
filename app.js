@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.2";
+const APP_VERSION = "v1.0.3";
 
 const exampleConfig = {
-  version: "1.0.2",
+  version: "1.0.3",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-transparency", title: "Transparence", description: "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.", order: 1, isActive: true },
@@ -63,15 +63,12 @@ function cacheElements() {
   elements.gameStatus = document.querySelector("#game-status");
   elements.backofficeMessage = document.querySelector("#backoffice-message");
   elements.drawPairButton = document.querySelector("#draw-pair-button");
-  elements.drawAnotherButton = document.querySelector("#draw-another-button");
   elements.resetSessionButton = document.querySelector("#reset-session-button");
   elements.showImplicationButton = document.querySelector("#show-implication-button");
   elements.implicationModal = document.querySelector("#implication-modal");
   elements.closeImplicationButton = document.querySelector("#close-implication-button");
   elements.implicationText = document.querySelector("#implication-text");
   elements.appVersion = document.querySelector("#app-version");
-  elements.principleCount = document.querySelector("#principle-count");
-  elements.activityCount = document.querySelector("#activity-count");
   elements.principleCard = document.querySelector("#principle-card");
   elements.activityCard = document.querySelector("#activity-card");
   elements.principleCardTitle = document.querySelector("#principle-card-title");
@@ -97,7 +94,6 @@ function bindEvents() {
   });
   document.querySelectorAll("[data-draw-proxy]").forEach((button) => button.addEventListener("click", drawPair));
   elements.drawPairButton.addEventListener("click", drawPair);
-  elements.drawAnotherButton.addEventListener("click", drawPair);
   elements.resetSessionButton.addEventListener("click", resetSession);
   elements.showImplicationButton.addEventListener("click", showImplication);
   elements.closeImplicationButton.addEventListener("click", closeImplication);
@@ -223,14 +219,9 @@ function closeImplication(restoreFocus = true) {
 
 function renderGame() {
   const eligibleMatchings = getEligibleMatchings();
-  const activePrinciples = appConfig.principles.filter((principle) => principle.isActive).length;
-  const activeActivities = appConfig.activities.filter((activity) => activity.isActive).length;
   const remainingCount = eligibleMatchings.filter((matching) => !playedMatchingIds.has(matching.id)).length;
 
-  elements.principleCount.textContent = String(activePrinciples);
-  elements.activityCount.textContent = String(activeActivities);
   elements.drawPairButton.disabled = remainingCount === 0;
-  elements.drawAnotherButton.disabled = remainingCount === 0;
   elements.showImplicationButton.disabled = !currentDraw;
 
   if (!currentDraw) {
