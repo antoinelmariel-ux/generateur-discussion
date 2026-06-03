@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.3";
+const APP_VERSION = "v1.0.2";
 
 const exampleConfig = {
-  version: "1.0.3",
+  version: "1.0.2",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-transparency", title: "Transparence", description: "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.", order: 1, isActive: true },
@@ -45,7 +45,6 @@ let appConfig = cloneConfig(exampleConfig);
 let playedMatchingIds = new Set();
 let currentDraw = null;
 let implicationVisible = false;
-let flippedCards = { principle: false, activity: false };
 let lastFocusedElement = null;
 
 const elements = {};
@@ -75,7 +74,6 @@ function cacheElements() {
   elements.activityCount = document.querySelector("#activity-count");
   elements.principleCard = document.querySelector("#principle-card");
   elements.activityCard = document.querySelector("#activity-card");
-  elements.flipCards = { principle: elements.principleCard, activity: elements.activityCard };
   elements.principleCardTitle = document.querySelector("#principle-card-title");
   elements.principleCardDescription = document.querySelector("#principle-card-description");
   elements.activityCardCategory = document.querySelector("#activity-card-category");
@@ -102,15 +100,6 @@ function bindEvents() {
   elements.drawAnotherButton.addEventListener("click", drawPair);
   elements.resetSessionButton.addEventListener("click", resetSession);
   elements.showImplicationButton.addEventListener("click", showImplication);
-  Object.entries(elements.flipCards).forEach(([cardType, cardElement]) => {
-    cardElement.addEventListener("click", () => flipDrawnCard(cardType));
-    cardElement.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        flipDrawnCard(cardType);
-      }
-    });
-  });
   elements.closeImplicationButton.addEventListener("click", closeImplication);
   elements.implicationModal.addEventListener("click", (event) => {
     if (event.target === elements.implicationModal) {
@@ -197,28 +186,16 @@ function drawPair() {
     principle: appConfig.principles.find((principle) => principle.id === matching.principleId),
     activity: appConfig.activities.find((activity) => activity.id === matching.activityId)
   };
-  flippedCards = { principle: false, activity: false };
-  setGameMessage(`${remainingMatchings.length - 1} paire(s) restante(s) après ce tirage. Cliquez sur chaque carte pour la retourner.`, "success");
+  setGameMessage(`${remainingMatchings.length - 1} paire(s) restante(s) après ce tirage.`, "success");
   renderGame();
 }
 
 function resetSession() {
   playedMatchingIds = new Set();
   currentDraw = null;
-  flippedCards = { principle: false, activity: false };
   closeImplication(false);
   setGameMessage("Session réinitialisée. Vous pouvez piocher une nouvelle paire.", "success");
   renderGame();
-}
-
-function flipDrawnCard(cardType) {
-  if (!currentDraw || !elements.flipCards[cardType] || flippedCards[cardType]) {
-    return;
-  }
-
-  flippedCards = { ...flippedCards, [cardType]: true };
-  elements.flipCards[cardType].classList.add("is-flipped");
-  updateCardAccessibility();
 }
 
 function showImplication() {
@@ -257,49 +234,24 @@ function renderGame() {
   elements.showImplicationButton.disabled = !currentDraw;
 
   if (!currentDraw) {
-    flippedCards = { principle: false, activity: false };
-    elements.principleCard.classList.remove("has-draw", "is-flipped");
-    elements.activityCard.classList.remove("has-draw", "is-flipped");
+    elements.principleCard.classList.remove("is-flipped");
+    elements.activityCard.classList.remove("is-flipped");
     elements.principleCardTitle.textContent = "Aucun tirage";
     elements.principleCardDescription.textContent = "Piochez une paire pour révéler un principe.";
     elements.activityCardCategory.textContent = "Activité";
     elements.activityCardTitle.textContent = "Aucun tirage";
     elements.activityCardDescription.textContent = "Piochez une paire pour révéler une activité.";
-    updateCardAccessibility();
     return;
   }
 
-  elements.principleCard.classList.add("has-draw");
-  elements.activityCard.classList.add("has-draw");
-  elements.principleCard.classList.toggle("is-flipped", flippedCards.principle);
-  elements.activityCard.classList.toggle("is-flipped", flippedCards.activity);
+  elements.principleCard.classList.add("is-flipped");
+  elements.activityCard.classList.add("is-flipped");
   elements.principleCardTitle.textContent = currentDraw.principle.title;
   elements.principleCardDescription.textContent = currentDraw.principle.description;
   elements.activityCardCategory.textContent = currentDraw.activity.category || "Activité";
   elements.activityCardTitle.textContent = currentDraw.activity.title;
   elements.activityCardDescription.textContent = currentDraw.activity.description;
-  updateCardAccessibility();
-}
 
-function updateCardAccessibility() {
-  Object.entries(elements.flipCards).forEach(([cardType, cardElement]) => {
-    const hasCurrentDraw = Boolean(currentDraw);
-    const isFlipped = Boolean(flippedCards[cardType]);
-    const label = cardType === "principle" ? "carte Principe" : "carte Activité";
-
-    cardElement.setAttribute("role", "button");
-    cardElement.setAttribute("tabindex", hasCurrentDraw ? "0" : "-1");
-    cardElement.setAttribute("aria-disabled", hasCurrentDraw ? "false" : "true");
-    cardElement.setAttribute("aria-pressed", isFlipped ? "true" : "false");
-    cardElement.setAttribute(
-      "aria-label",
-      hasCurrentDraw
-        ? isFlipped
-          ? `${label} retournée`
-          : `Retourner la ${label}`
-        : `${label} en attente de tirage`
-    );
-  });
 }
 
 function renderBackoffice() {
