@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.8";
+const APP_VERSION = "v1.0.9";
 
 const exampleConfig = {
-  version: "1.0.8",
+  version: "1.0.9",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-patient-benefit-legitimate-purpose", title: "Patient benefit and legitimate purpose", description: "Toute interaction avec un HCP doit avoir une finalité légitime et avoir pour but le bénéfice des patients. Les HCP ne peuvent être sollicités, soutenus ou rémunérés que lorsqu’il existe un besoin réel et cohérent avec cette finalité.", order: 1, isActive: true },
