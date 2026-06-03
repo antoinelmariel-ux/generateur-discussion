@@ -1,6 +1,6 @@
 # Become the boss of ethical interactions with HCPs
 
-Version footer : **v1.0.0**
+Version application : **v1.0.1**
 
 ## Objectif
 
@@ -10,7 +10,7 @@ L'application fonctionne sans serveur, sans backend, sans base de données, sans
 
 ## Fonctionnalités V1
 
-- Écran d'accueil avec lancement du jeu et accès au backoffice.
+- Écran d'accueil sans header ni footer, avec lancement du jeu et accès au backoffice.
 - Espace Jeu avec deux tas de cartes : **Principes** et **Activités**.
 - Tirage aléatoire d'une paire valide Principe / Activité.
 - Exclusion des paires déjà piochées pendant la session courante.
@@ -48,7 +48,7 @@ Aucune installation n'est nécessaire.
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "updatedAt": "2026-06-03T00:00:00.000Z",
   "principles": [
     {
