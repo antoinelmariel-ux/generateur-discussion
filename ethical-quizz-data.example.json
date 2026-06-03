@@ -1,46 +1,46 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.5",
   "updatedAt": "2026-06-03T00:00:00.000Z",
   "principles": [
     {
-      "id": "principle-transparency",
-      "title": "Transparence",
-      "description": "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.",
+      "id": "principle-patient-benefit-legitimate-purpose",
+      "title": "Patient benefit and legitimate purpose",
+      "description": "Toute interaction avec un HCP doit avoir une finalité légitime et avoir pour but le bénéfice des patients. Les HCP ne peuvent être sollicités, soutenus ou rémunérés que lorsqu’il existe un besoin réel et cohérent avec cette finalité.",
       "order": 1,
       "isActive": true
     },
     {
-      "id": "principle-independence",
-      "title": "Indépendance professionnelle",
-      "description": "Préserver la liberté de jugement clinique et scientifique du professionnel de santé, sans influence indue directe ou indirecte.",
+      "id": "principle-scientific-integrity-genuine-communication",
+      "title": "Scientific integrity and genuine communication",
+      "description": "Toute communication doit être exacte, équilibrée, étayée, à jour, non trompeuse et adaptée à l’audience, au pays et au contexte ; chacun doit comprendre qui s’exprime, dans quel rôle et avec quelle intention.",
       "order": 2,
       "isActive": true
     },
     {
-      "id": "principle-legitimate-need",
-      "title": "Besoin légitime",
-      "description": "S'assurer que toute interaction répond à un objectif professionnel clair, documenté et proportionné.",
+      "id": "principle-independence-professional-judgment",
+      "title": "Independence of professional judgment",
+      "description": "Aucune interaction ne doit influencer, récompenser ou sembler influencer le jugement professionnel indépendant d’un HCP ou d’une HCO.",
       "order": 3,
       "isActive": true
     },
     {
-      "id": "principle-fair-market-value",
-      "title": "Juste valeur",
-      "description": "Aligner toute rémunération ou contrepartie sur la valeur raisonnable du service rendu, sans lien avec les prescriptions.",
+      "id": "principle-transparency",
+      "title": "Transparency",
+      "description": "Nous assumons nos décisions et interactions qui peuvent être rendues visibles et comprises par des observateurs externes, sans ambiguïté ni risque de mauvaise interprétation. Notre rôle, nos intentions et nos financements doivent être clairement identifiés, correctement enregistrés et déclarés lorsque cela est requis.",
       "order": 4,
       "isActive": true
     },
     {
-      "id": "principle-patient-focus",
-      "title": "Intérêt des patients",
-      "description": "Garder comme boussole l'amélioration de la qualité de l'information, du soin ou de la prise en charge des patients.",
+      "id": "principle-accountability-responsible-ownership",
+      "title": "Accountability and responsible ownership",
+      "description": "Chaque interaction doit avoir un responsable clairement identifié, capable d’assumer la décision, l’exécution, le suivi, la supervision des tiers, l’escalade et la documentation jusqu’à la clôture.",
       "order": 5,
       "isActive": true
     },
     {
-      "id": "principle-accountability",
-      "title": "Traçabilité et responsabilité",
-      "description": "Documenter les décisions, validations et livrables afin de pouvoir expliquer et justifier l'interaction.",
+      "id": "principle-societal-trust-stricter-standards",
+      "title": "Societal trust and stricter standards",
+      "description": "Nous appliquons la règle la plus stricte et allons au-delà du minimum légal lorsque la confiance des patients, des HCP, des autorités ou de la société pourrait être affectée.",
       "order": 6,
       "isActive": true
     }
@@ -113,63 +113,63 @@
     },
     {
       "id": "matching-legitimate-congress",
-      "principleId": "principle-legitimate-need",
+      "principleId": "principle-patient-benefit-legitimate-purpose",
       "activityId": "activity-congress",
       "expertImplication": "Le congrès doit répondre à un besoin professionnel documenté : thème pertinent, audience adaptée et lien clair avec l'information scientifique attendue, sans invitation de convenance.",
       "isActive": true
     },
     {
       "id": "matching-independence-selection",
-      "principleId": "principle-independence",
+      "principleId": "principle-independence-professional-judgment",
       "activityId": "activity-hcp-selection",
       "expertImplication": "La sélection doit reposer sur l'expertise, l'expérience et la pertinence du profil, jamais sur le volume d'activité, les prescriptions ou une attente commerciale implicite.",
       "isActive": true
     },
     {
       "id": "matching-accountability-selection",
-      "principleId": "principle-accountability",
+      "principleId": "principle-accountability-responsible-ownership",
       "activityId": "activity-hcp-selection",
       "expertImplication": "Documenter les critères de sélection, les validations et les éventuels conflits d'intérêts permet de démontrer que le choix est professionnel et défendable.",
       "isActive": true
     },
     {
       "id": "matching-patient-content",
-      "principleId": "principle-patient-focus",
+      "principleId": "principle-patient-benefit-legitimate-purpose",
       "activityId": "activity-content",
       "expertImplication": "Un support utile doit améliorer la qualité de l'information et éviter les messages déséquilibrés. La clarté, la vérifiabilité et la pertinence clinique priment sur l'impact promotionnel.",
       "isActive": true
     },
     {
-      "id": "matching-transparency-content",
-      "principleId": "principle-transparency",
+      "id": "matching-scientific-content",
+      "principleId": "principle-scientific-integrity-genuine-communication",
       "activityId": "activity-content",
       "expertImplication": "Les sources, le statut du support, le public visé et le rôle du laboratoire doivent être compréhensibles pour éviter toute ambiguïté sur l'intention du contenu.",
       "isActive": true
     },
     {
       "id": "matching-legitimate-advisory",
-      "principleId": "principle-legitimate-need",
+      "principleId": "principle-patient-benefit-legitimate-purpose",
       "activityId": "activity-advisory-board",
       "expertImplication": "Un advisory board doit partir d'une question précise que l'entreprise ne peut pas résoudre seule. Le nombre d'experts, l'ordre du jour et les livrables doivent être proportionnés.",
       "isActive": true
     },
     {
       "id": "matching-independence-advisory",
-      "principleId": "principle-independence",
+      "principleId": "principle-independence-professional-judgment",
       "activityId": "activity-advisory-board",
       "expertImplication": "Les experts doivent pouvoir exprimer des avis critiques. La réunion ne doit pas servir de promotion déguisée ni orienter artificiellement les conclusions attendues.",
       "isActive": true
     },
     {
       "id": "matching-fmv-remuneration",
-      "principleId": "principle-fair-market-value",
+      "principleId": "principle-societal-trust-stricter-standards",
       "activityId": "activity-remuneration",
       "expertImplication": "La rémunération doit correspondre au temps, à la préparation, au niveau d'expertise et au livrable attendu. Elle ne doit jamais récompenser ou encourager une prescription.",
       "isActive": true
     },
     {
       "id": "matching-accountability-remuneration",
-      "principleId": "principle-accountability",
+      "principleId": "principle-accountability-responsible-ownership",
       "activityId": "activity-remuneration",
       "expertImplication": "Le contrat, la justification du besoin, la preuve de service fait et le calcul de la rémunération doivent être conservés pour démontrer la conformité de l'interaction.",
       "isActive": true
@@ -183,28 +183,28 @@
     },
     {
       "id": "matching-patient-sponsorship",
-      "principleId": "principle-patient-focus",
+      "principleId": "principle-patient-benefit-legitimate-purpose",
       "activityId": "activity-sponsorship",
       "expertImplication": "Le partenariat doit apporter une valeur identifiable pour l'information, le parcours de soin ou la communauté de patients, et non servir principalement un objectif d'influence.",
       "isActive": true
     },
     {
       "id": "matching-legitimate-event",
-      "principleId": "principle-legitimate-need",
+      "principleId": "principle-patient-benefit-legitimate-purpose",
       "activityId": "activity-event",
       "expertImplication": "La réunion locale doit avoir un programme, une audience et un format cohérents avec son objectif scientifique. Le lieu et l'hospitalité doivent rester secondaires.",
       "isActive": true
     },
     {
       "id": "matching-accountability-event",
-      "principleId": "principle-accountability",
+      "principleId": "principle-accountability-responsible-ownership",
       "activityId": "activity-event",
       "expertImplication": "Conserver l'agenda, les invitations, les validations et les preuves de réalisation aide à expliquer la finalité professionnelle de l'événement.",
       "isActive": true
     },
     {
       "id": "matching-independence-research",
-      "principleId": "principle-independence",
+      "principleId": "principle-independence-professional-judgment",
       "activityId": "activity-market-research",
       "expertImplication": "L'étude ne doit pas être un prétexte pour influencer les participants. Les questions doivent être neutres et la rémunération proportionnée au temps réellement consacré.",
       "isActive": true
