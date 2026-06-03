@@ -1,7 +1,7 @@
-const APP_VERSION = "v1.0.0";
+const APP_VERSION = "v1.0.1";
 
 const exampleConfig = {
-  version: "1.0.0",
+  version: "1.0.1",
   updatedAt: "2026-06-03T00:00:00.000Z",
   principles: [
     { id: "principle-transparency", title: "Transparence", description: "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.", order: 1, isActive: true },
@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function cacheElements() {
-  elements.version = document.querySelector("#app-version");
   elements.views = document.querySelectorAll(".view");
   elements.homeDataStatus = document.querySelector("#home-data-status");
   elements.gameStatus = document.querySelector("#game-status");
@@ -111,7 +110,6 @@ function bindEvents() {
 
 function showView(viewName) {
   elements.views.forEach((view) => view.classList.toggle("is-active", view.id === `${viewName}-view`));
-  document.querySelectorAll(".nav-link").forEach((link) => link.classList.toggle("is-current", link.dataset.viewLink === viewName));
 }
 
 function showTab(tabName) {
@@ -135,7 +133,6 @@ function validateOrFallback() {
 }
 
 function updateAllViews() {
-  elements.version.textContent = APP_VERSION;
   renderGame();
   renderBackoffice();
   const eligibleCount = getEligibleMatchings().length;
