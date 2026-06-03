@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Become the boss of ethical interactions with HCPs</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Navigation principale">
+        <a class="brand" href="#home" data-view-link="home">Ethical HCPs</a>
+        <nav class="nav-actions">
+          <button class="nav-link" type="button" data-view-link="game">Jeu</button>
+          <button class="nav-link" type="button" data-view-link="backoffice">Backoffice</button>
+        </nav>
+      </header>
+
+      <main>
+        <section id="home-view" class="view hero-view is-active" aria-labelledby="home-title">
+          <div class="hero-card reveal-in">
+            <p class="eyebrow">Jeu de discussion éthique</p>
+            <h1 id="home-title">Become the boss of ethical interactions with HCPs</h1>
+            <p class="hero-subtitle">
+              Animez une conversation mémorable autour des principes éthiques appliqués aux interactions avec des professionnels de santé.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" type="button" data-view-link="game">Commencer</button>
+              <button class="secondary-button" type="button" data-view-link="backoffice">Ouvrir le backoffice</button>
+            </div>
+            <p id="home-data-status" class="status-pill" role="status"></p>
+          </div>
+        </section>
+
+        <section id="game-view" class="view" aria-labelledby="game-title">
+          <div class="section-heading">
+            <p class="eyebrow">Espace Jeu</p>
+            <h2 id="game-title">Piochez une situation éthique</h2>
+            <p>Retournez une carte Principe et une carte Activité, discutez, puis révélez l'implication experte.</p>
+          </div>
+
+          <div id="game-status" class="message" role="status"></div>
+
+          <div class="deck-grid" aria-label="Tas de cartes">
+            <button id="draw-pair-button" class="deck-card principle-deck" type="button">
+              <span class="deck-count" id="principle-count">0</span>
+              <span class="deck-label">Tas Principes</span>
+              <span class="deck-hint">Cliquer pour piocher une paire</span>
+            </button>
+            <button class="deck-card activity-deck" type="button" data-draw-proxy>
+              <span class="deck-count" id="activity-count">0</span>
+              <span class="deck-label">Tas Activités</span>
+              <span class="deck-hint">Même tirage, paire valide garantie</span>
+            </button>
+          </div>
+
+          <div class="drawn-area" aria-live="polite">
+            <article class="flip-card" id="principle-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-face flip-card-back">
+                  <span>Principe</span>
+                  <strong>Carte à retourner</strong>
+                </div>
+                <div class="flip-card-face flip-card-front">
+                  <p class="card-kicker">Principe</p>
+                  <h3 id="principle-card-title">Aucun tirage</h3>
+                  <p id="principle-card-description">Piochez une paire pour révéler un principe.</p>
+                </div>
+              </div>
+            </article>
+            <article class="flip-card" id="activity-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-face flip-card-back">
+                  <span>Activité</span>
+                  <strong>Carte à retourner</strong>
+                </div>
+                <div class="flip-card-face flip-card-front">
+                  <p class="card-kicker" id="activity-card-category">Activité</p>
+                  <h3 id="activity-card-title">Aucun tirage</h3>
+                  <p id="activity-card-description">Piochez une paire pour révéler une activité.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="game-actions">
+            <button id="show-implication-button" class="primary-button" type="button" disabled>Voir les implications</button>
+            <button id="draw-another-button" class="secondary-button" type="button">Piocher une autre paire</button>
+            <button id="reset-session-button" class="ghost-button" type="button">Réinitialiser la session</button>
+          </div>
+
+          <aside id="implication-panel" class="implication-panel" hidden>
+            <p class="eyebrow">Implication experte</p>
+            <p id="implication-text"></p>
+          </aside>
+        </section>
+
+        <section id="backoffice-view" class="view" aria-labelledby="backoffice-title">
+          <div class="section-heading">
+            <p class="eyebrow">Backoffice local</p>
+            <h2 id="backoffice-title">Administrer la configuration</h2>
+            <p>Créez, modifiez, importez ou exportez les contenus du jeu sans serveur.</p>
+          </div>
+
+          <div id="backoffice-message" class="message" role="status"></div>
+
+          <div class="io-panel">
+            <label class="file-label">
+              Import JSON
+              <input id="import-config-input" type="file" accept="application/json,.json" />
+            </label>
+            <button id="export-config-button" class="primary-button" type="button">Exporter JSON</button>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Sections du backoffice">
+            <button class="tab-button is-active" id="principles-tab" type="button" role="tab" aria-selected="true" aria-controls="principles-panel" data-tab="principles">Principes</button>
+            <button class="tab-button" id="activities-tab" type="button" role="tab" aria-selected="false" aria-controls="activities-panel" data-tab="activities">Activités</button>
+            <button class="tab-button" id="matchings-tab" type="button" role="tab" aria-selected="false" aria-controls="matchings-panel" data-tab="matchings">Associations</button>
+          </div>
+
+          <div id="principles-panel" class="tab-panel is-active" role="tabpanel" aria-labelledby="principles-tab">
+            <form id="principle-form" class="editor-form">
+              <input type="hidden" id="principle-id" />
+              <div class="form-grid">
+                <label>Titre *<input id="principle-title" type="text" required /></label>
+                <label>Ordre<input id="principle-order" type="number" min="0" value="1" /></label>
+                <label class="wide">Description *<textarea id="principle-description" required></textarea></label>
+                <label class="checkbox-label"><input id="principle-active" type="checkbox" checked /> Actif</label>
+              </div>
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Enregistrer le principe</button>
+                <button id="cancel-principle-edit" class="ghost-button" type="button">Annuler</button>
+              </div>
+            </form>
+            <div id="principles-list" class="admin-list"></div>
+          </div>
+
+          <div id="activities-panel" class="tab-panel" role="tabpanel" aria-labelledby="activities-tab" hidden>
+            <form id="activity-form" class="editor-form">
+              <input type="hidden" id="activity-id" />
+              <div class="form-grid">
+                <label>Catégorie *<input id="activity-category" type="text" required /></label>
+                <label>Titre *<input id="activity-title" type="text" required /></label>
+                <label class="wide">Description *<textarea id="activity-description" required></textarea></label>
+                <label class="checkbox-label"><input id="activity-active" type="checkbox" checked /> Actif</label>
+              </div>
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Enregistrer l'activité</button>
+                <button id="cancel-activity-edit" class="ghost-button" type="button">Annuler</button>
+              </div>
+            </form>
+            <div id="activities-list" class="admin-list"></div>
+          </div>
+
+          <div id="matchings-panel" class="tab-panel" role="tabpanel" aria-labelledby="matchings-tab" hidden>
+            <form id="matching-form" class="editor-form">
+              <input type="hidden" id="matching-id" />
+              <div class="form-grid">
+                <label>Principe *<select id="matching-principle" required></select></label>
+                <label>Activité *<select id="matching-activity" required></select></label>
+                <label class="wide">Implication experte<textarea id="matching-implication" placeholder="Renseigner l'explication experte du couple."></textarea></label>
+                <label class="checkbox-label"><input id="matching-active" type="checkbox" checked /> Actif</label>
+              </div>
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Enregistrer l'association</button>
+                <button id="cancel-matching-edit" class="ghost-button" type="button">Annuler</button>
+              </div>
+            </form>
+            <div id="matchings-list" class="admin-list"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <span>Application locale sans serveur.</span>
+        <span>Version <strong id="app-version">v1.0.0</strong></span>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
