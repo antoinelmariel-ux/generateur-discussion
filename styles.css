@@ -370,21 +370,6 @@ h3 {
   filter: drop-shadow(0 18px 30px rgba(22, 32, 51, 0.16));
 }
 
-.flip-card.has-draw {
-  cursor: pointer;
-}
-
-.flip-card.has-draw:not(.is-flipped):hover .flip-card-inner,
-.flip-card.has-draw:not(.is-flipped):focus-visible .flip-card-inner {
-  transform: translateY(-6px) rotateY(0deg);
-}
-
-.flip-card.has-draw:not(.is-flipped):focus-visible {
-  outline: 3px solid rgba(34, 86, 217, 0.35);
-  outline-offset: 6px;
-  border-radius: 20px;
-}
-
 .flip-card-inner {
   position: relative;
   width: 100%;
