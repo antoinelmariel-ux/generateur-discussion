@@ -1,0 +1,220 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-06-03T00:00:00.000Z",
+  "principles": [
+    {
+      "id": "principle-transparency",
+      "title": "Transparence",
+      "description": "Rendre explicites les objectifs, les rôles, les flux de valeur et les responsabilités de chaque interaction avec un professionnel de santé.",
+      "order": 1,
+      "isActive": true
+    },
+    {
+      "id": "principle-independence",
+      "title": "Indépendance professionnelle",
+      "description": "Préserver la liberté de jugement clinique et scientifique du professionnel de santé, sans influence indue directe ou indirecte.",
+      "order": 2,
+      "isActive": true
+    },
+    {
+      "id": "principle-legitimate-need",
+      "title": "Besoin légitime",
+      "description": "S'assurer que toute interaction répond à un objectif professionnel clair, documenté et proportionné.",
+      "order": 3,
+      "isActive": true
+    },
+    {
+      "id": "principle-fair-market-value",
+      "title": "Juste valeur",
+      "description": "Aligner toute rémunération ou contrepartie sur la valeur raisonnable du service rendu, sans lien avec les prescriptions.",
+      "order": 4,
+      "isActive": true
+    },
+    {
+      "id": "principle-patient-focus",
+      "title": "Intérêt des patients",
+      "description": "Garder comme boussole l'amélioration de la qualité de l'information, du soin ou de la prise en charge des patients.",
+      "order": 5,
+      "isActive": true
+    },
+    {
+      "id": "principle-accountability",
+      "title": "Traçabilité et responsabilité",
+      "description": "Documenter les décisions, validations et livrables afin de pouvoir expliquer et justifier l'interaction.",
+      "order": 6,
+      "isActive": true
+    }
+  ],
+  "activities": [
+    {
+      "id": "activity-congress",
+      "category": "Événement",
+      "title": "Participation à un congrès",
+      "description": "Inviter ou accompagner des professionnels de santé dans le cadre d'un congrès scientifique.",
+      "isActive": true
+    },
+    {
+      "id": "activity-hcp-selection",
+      "category": "Sélection",
+      "title": "Sélection d'experts",
+      "description": "Identifier des professionnels de santé pour intervenir, conseiller ou contribuer à un projet.",
+      "isActive": true
+    },
+    {
+      "id": "activity-content",
+      "category": "Information",
+      "title": "Création de supports",
+      "description": "Concevoir des supports scientifiques, promotionnels ou de formation destinés à des professionnels de santé.",
+      "isActive": true
+    },
+    {
+      "id": "activity-advisory-board",
+      "category": "Conseil",
+      "title": "Advisory board",
+      "description": "Réunir des experts afin de recueillir des retours structurés sur une question médicale ou stratégique.",
+      "isActive": true
+    },
+    {
+      "id": "activity-remuneration",
+      "category": "Contrat",
+      "title": "Rémunération d'un intervenant",
+      "description": "Définir une contrepartie financière pour une prestation réalisée par un professionnel de santé.",
+      "isActive": true
+    },
+    {
+      "id": "activity-sponsorship",
+      "category": "Partenariat",
+      "title": "Soutien à une association",
+      "description": "Apporter un soutien financier ou matériel à une association ou organisation liée à la santé.",
+      "isActive": true
+    },
+    {
+      "id": "activity-event",
+      "category": "Événement",
+      "title": "Organisation d'une réunion locale",
+      "description": "Organiser une rencontre professionnelle autour d'un thème scientifique ou médical.",
+      "isActive": true
+    },
+    {
+      "id": "activity-market-research",
+      "category": "Étude",
+      "title": "Étude de marché auprès de HCPs",
+      "description": "Interroger des professionnels de santé pour comprendre des besoins, pratiques ou perceptions.",
+      "isActive": true
+    }
+  ],
+  "matchings": [
+    {
+      "id": "matching-transparency-congress",
+      "principleId": "principle-transparency",
+      "activityId": "activity-congress",
+      "expertImplication": "Clarifier l'objectif scientifique de la participation, les modalités de prise en charge et les limites d'hospitalité. Les participants doivent comprendre ce qui est couvert, pourquoi et selon quelles règles.",
+      "isActive": true
+    },
+    {
+      "id": "matching-legitimate-congress",
+      "principleId": "principle-legitimate-need",
+      "activityId": "activity-congress",
+      "expertImplication": "Le congrès doit répondre à un besoin professionnel documenté : thème pertinent, audience adaptée et lien clair avec l'information scientifique attendue, sans invitation de convenance.",
+      "isActive": true
+    },
+    {
+      "id": "matching-independence-selection",
+      "principleId": "principle-independence",
+      "activityId": "activity-hcp-selection",
+      "expertImplication": "La sélection doit reposer sur l'expertise, l'expérience et la pertinence du profil, jamais sur le volume d'activité, les prescriptions ou une attente commerciale implicite.",
+      "isActive": true
+    },
+    {
+      "id": "matching-accountability-selection",
+      "principleId": "principle-accountability",
+      "activityId": "activity-hcp-selection",
+      "expertImplication": "Documenter les critères de sélection, les validations et les éventuels conflits d'intérêts permet de démontrer que le choix est professionnel et défendable.",
+      "isActive": true
+    },
+    {
+      "id": "matching-patient-content",
+      "principleId": "principle-patient-focus",
+      "activityId": "activity-content",
+      "expertImplication": "Un support utile doit améliorer la qualité de l'information et éviter les messages déséquilibrés. La clarté, la vérifiabilité et la pertinence clinique priment sur l'impact promotionnel.",
+      "isActive": true
+    },
+    {
+      "id": "matching-transparency-content",
+      "principleId": "principle-transparency",
+      "activityId": "activity-content",
+      "expertImplication": "Les sources, le statut du support, le public visé et le rôle du laboratoire doivent être compréhensibles pour éviter toute ambiguïté sur l'intention du contenu.",
+      "isActive": true
+    },
+    {
+      "id": "matching-legitimate-advisory",
+      "principleId": "principle-legitimate-need",
+      "activityId": "activity-advisory-board",
+      "expertImplication": "Un advisory board doit partir d'une question précise que l'entreprise ne peut pas résoudre seule. Le nombre d'experts, l'ordre du jour et les livrables doivent être proportionnés.",
+      "isActive": true
+    },
+    {
+      "id": "matching-independence-advisory",
+      "principleId": "principle-independence",
+      "activityId": "activity-advisory-board",
+      "expertImplication": "Les experts doivent pouvoir exprimer des avis critiques. La réunion ne doit pas servir de promotion déguisée ni orienter artificiellement les conclusions attendues.",
+      "isActive": true
+    },
+    {
+      "id": "matching-fmv-remuneration",
+      "principleId": "principle-fair-market-value",
+      "activityId": "activity-remuneration",
+      "expertImplication": "La rémunération doit correspondre au temps, à la préparation, au niveau d'expertise et au livrable attendu. Elle ne doit jamais récompenser ou encourager une prescription.",
+      "isActive": true
+    },
+    {
+      "id": "matching-accountability-remuneration",
+      "principleId": "principle-accountability",
+      "activityId": "activity-remuneration",
+      "expertImplication": "Le contrat, la justification du besoin, la preuve de service fait et le calcul de la rémunération doivent être conservés pour démontrer la conformité de l'interaction.",
+      "isActive": true
+    },
+    {
+      "id": "matching-transparency-sponsorship",
+      "principleId": "principle-transparency",
+      "activityId": "activity-sponsorship",
+      "expertImplication": "Le soutien doit être formalisé, traçable et distinct de toute attente commerciale. Les bénéficiaires, objectifs et montants doivent pouvoir être expliqués clairement.",
+      "isActive": true
+    },
+    {
+      "id": "matching-patient-sponsorship",
+      "principleId": "principle-patient-focus",
+      "activityId": "activity-sponsorship",
+      "expertImplication": "Le partenariat doit apporter une valeur identifiable pour l'information, le parcours de soin ou la communauté de patients, et non servir principalement un objectif d'influence.",
+      "isActive": true
+    },
+    {
+      "id": "matching-legitimate-event",
+      "principleId": "principle-legitimate-need",
+      "activityId": "activity-event",
+      "expertImplication": "La réunion locale doit avoir un programme, une audience et un format cohérents avec son objectif scientifique. Le lieu et l'hospitalité doivent rester secondaires.",
+      "isActive": true
+    },
+    {
+      "id": "matching-accountability-event",
+      "principleId": "principle-accountability",
+      "activityId": "activity-event",
+      "expertImplication": "Conserver l'agenda, les invitations, les validations et les preuves de réalisation aide à expliquer la finalité professionnelle de l'événement.",
+      "isActive": true
+    },
+    {
+      "id": "matching-independence-research",
+      "principleId": "principle-independence",
+      "activityId": "activity-market-research",
+      "expertImplication": "L'étude ne doit pas être un prétexte pour influencer les participants. Les questions doivent être neutres et la rémunération proportionnée au temps réellement consacré.",
+      "isActive": true
+    },
+    {
+      "id": "matching-transparency-research",
+      "principleId": "principle-transparency",
+      "activityId": "activity-market-research",
+      "expertImplication": "Les participants doivent comprendre le cadre de l'étude, l'usage attendu des réponses et les conditions de participation, sans collecte de données personnelles inutile.",
+      "isActive": true
+    }
+  ]
+}
