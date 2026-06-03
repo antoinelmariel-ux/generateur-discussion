@@ -1,6 +1,6 @@
 # Become the boss of ethical interactions with HCPs
 
-Version application : **v1.0.1**
+Version application : **v1.0.2**
 
 ## Objectif
 
@@ -48,7 +48,7 @@ Aucune installation n'est nécessaire.
 
 ```json
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "updatedAt": "2026-06-03T00:00:00.000Z",
   "principles": [
     {
