@@ -16,11 +16,19 @@
             <p class="hero-subtitle">
               Animez une conversation mémorable autour des principes éthiques appliqués aux interactions avec des professionnels de santé.
             </p>
+            <div class="category-selector" aria-labelledby="activity-category-selector-title">
+              <div class="category-selector-header">
+                <div>
+                  <h2 id="activity-category-selector-title">Catégories de cartes Activités</h2>
+                  <p>Choisissez toutes les catégories ou seulement celles à intégrer à la partie.</p>
+                </div>
+                <button id="select-all-categories-button" class="ghost-button" type="button">Tout sélectionner</button>
+              </div>
+              <div id="activity-category-options" class="category-options"></div>
+            </div>
             <div class="hero-actions">
               <button class="primary-button" type="button" data-view-link="game">Commencer</button>
-              <button class="secondary-button" type="button" data-view-link="backoffice">Ouvrir le backoffice</button>
             </div>
-            <p id="home-data-status" class="status-pill" role="status"></p>
           </div>
         </section>
 
@@ -169,7 +177,7 @@
       </main>
 
       <footer class="app-footer">
-        <span>Version <strong id="app-version">v1.0.5</strong></span>
+        <span>Version <strong id="app-version">v1.0.6</strong></span>
       </footer>
     </div>
 
