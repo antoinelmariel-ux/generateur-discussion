@@ -617,6 +617,7 @@ h3 {
   margin-bottom: 0;
   color: var(--muted);
   font-size: 1.05rem;
+  white-space: pre-line;
 }
 
 .modal-close {

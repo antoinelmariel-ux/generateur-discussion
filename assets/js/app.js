@@ -1,7 +1,16 @@
-const APP_VERSION = "v1.0.14";
+const APP_VERSION = "v1.0.15";
+
+const PRINCIPLE_GUIDING_QUESTIONS = {
+  "principle-patient-benefit-legitimate-purpose": "Pouvez-vous expliquer clairement en quoi cette interaction / activité contribue, directement ou indirectement, au bénéfice des patients et pourquoi ce HCP est nécessaire pour atteindre cette finalité ?",
+  "principle-scientific-integrity-genuine-communication": "L’information est-elle exacte, équilibrée, étayée, approuvée et portée par la bonne fonction, avec la bonne intention, dans le bon contexte ?",
+  "principle-independence-professional-judgment": "Ce soutien pourrait-il créer un sentiment d’obligation ou laisser penser qu’un comportement favorable est attendu en retour ?",
+  "principle-transparency": "Un observateur externe comprendrait-il immédiatement qui est derrière l’activité, quel est notre rôle, quelle est notre intention et quelle valeur a été apportée ?",
+  "principle-accountability-responsible-ownership": "Qui assume la responsabilité de cette interaction de bout en bout ? Pourrions-nous reconstituer l’activité, les décisions, les validations si l’ensemble des personnes impliquées partaient de l’entreprise ?",
+  "principle-societal-trust-stricter-standards": "Même si l’activité paraît légalement possible, pouvons-nous la défendre publiquement comme éthique, proportionnée, transparente et conforme à la norme la plus stricte applicable ?"
+};
 
 const exampleConfig = {
-  version: "1.0.14",
+  version: "1.0.15",
   updatedAt: "2026-06-04T00:00:00.000Z",
   principles: [
     { id: "principle-patient-benefit-legitimate-purpose", title: "Patient benefit and legitimate purpose", description: "Toute interaction avec un HCP doit avoir une finalité légitime et avoir pour but le bénéfice des patients. Les HCP ne peuvent être sollicités, soutenus ou rémunérés que lorsqu’il existe un besoin réel et cohérent avec cette finalité.", order: 1, isActive: true },
@@ -307,11 +316,27 @@ function showImplication() {
   }
   implicationVisible = true;
   lastFocusedElement = document.activeElement;
-  const implication = currentDraw.matching.expertImplication.trim();
+  const implication = formatImplication(currentDraw.matching, currentDraw.principle);
   elements.implicationText.textContent = implication || "Aucune implication experte n'est renseignée pour cette association. Complétez-la dans le backoffice.";
   elements.implicationModal.hidden = false;
   document.body.classList.add("modal-open");
   elements.closeImplicationButton.focus();
+}
+
+function formatImplication(matching, principle) {
+  const application = String(matching?.expertImplication || "").trim();
+  if (!application) {
+    return "";
+  }
+
+  const guidingQuestion = PRINCIPLE_GUIDING_QUESTIONS[principle?.id || matching?.principleId];
+  if (!guidingQuestion) {
+    return `La bonne question à se poser : ${application}`;
+  }
+
+  return `La bonne question à se poser : ${guidingQuestion}
+
+Application à l'activité : ${application}`;
 }
 
 function closeImplication(restoreFocus = true) {
