@@ -15,13 +15,13 @@
             <p class="eyebrow">Jeu de discussion éthique</p>
             <h1 id="home-title">Become the boss of ethical interactions with HCPs</h1>
             <p class="hero-subtitle">
-              Animez une conversation mémorable autour des principes éthiques appliqués aux interactions avec des professionnels de santé.
+              Appréhendez les principes structurant nos nteractions avec des professionnels de santé et leurs applications dans vos actions au quotidien.
             </p>
             <div class="category-selector" aria-labelledby="activity-category-selector-title">
               <div class="category-selector-header">
                 <div>
                   <h2 id="activity-category-selector-title">Catégories de cartes Activités</h2>
-                  <p>Choisissez toutes les catégories ou seulement celles à intégrer à la partie.</p>
+                  <p>Choisissez les catégories d'activité à intégrer à la partie.</p>
                 </div>
                 <button id="select-all-categories-button" class="ghost-button" type="button">Tout sélectionner</button>
               </div>
@@ -35,8 +35,8 @@
 
         <section id="game-view" class="view" aria-labelledby="game-title">
           <div class="section-heading">
-            <h2 id="game-title">Piochez une situation éthique</h2>
-            <p>Retournez une carte Principe et une carte Activité, discutez, puis révélez l'implication experte.</p>
+            <h2 id="game-title">Piochez une situation</h2>
+            <p>Retournez une carte Activité et une carte Principe, discutez de la façon dont ce principe vient guider votre la gestion de votre activité. Découvrez ensuite la façon dont ce principe s'applique dans la procédure dédiée à l'activité.</p>
           </div>
 
           <div id="game-status" class="message" role="status"></div>
@@ -87,7 +87,7 @@
           </div>
 
           <div class="game-actions">
-            <button id="show-implication-button" class="primary-button" type="button" disabled>Voir les implications</button>
+            <button id="show-implication-button" class="primary-button" type="button" disabled>Découvrir l'application</button>
             <button class="ghost-button category-change-button" type="button" data-view-link="home">Changer les catégories</button>
             <button id="reset-session-button" class="icon-button reset-session-button" type="button" aria-label="Réinitialiser la session" title="Réinitialiser la session">↻</button>
           </div>
@@ -95,7 +95,7 @@
           <div id="implication-modal" class="modal-backdrop" hidden>
             <section class="implication-modal" role="dialog" aria-modal="true" aria-labelledby="implication-modal-title" aria-describedby="implication-text">
               <button id="close-implication-button" class="modal-close" type="button" aria-label="Fermer les implications">×</button>
-              <p class="eyebrow">Implication experte</p>
+              <p class="eyebrow">Application du principe</p>
               <h3 id="implication-modal-title">À discuter ensemble</h3>
               <p id="implication-text"></p>
             </section>
