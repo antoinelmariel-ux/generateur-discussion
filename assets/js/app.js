@@ -1,8 +1,8 @@
-const APP_VERSION = "v1.0.11";
+const APP_VERSION = "v1.0.12";
 
 const exampleConfig = {
-  version: "1.0.11",
-  updatedAt: "2026-06-03T00:00:00.000Z",
+  version: "1.0.12",
+  updatedAt: "2026-06-04T00:00:00.000Z",
   principles: [
     { id: "principle-patient-benefit-legitimate-purpose", title: "Patient benefit and legitimate purpose", description: "Toute interaction avec un HCP doit avoir une finalité légitime et avoir pour but le bénéfice des patients. Les HCP ne peuvent être sollicités, soutenus ou rémunérés que lorsqu’il existe un besoin réel et cohérent avec cette finalité.", order: 1, isActive: true },
     { id: "principle-scientific-integrity-genuine-communication", title: "Scientific integrity and genuine communication", description: "Toute communication doit être exacte, équilibrée, étayée, à jour, non trompeuse et adaptée à l’audience, au pays et au contexte ; chacun doit comprendre qui s’exprime, dans quel rôle et avec quelle intention.", order: 2, isActive: true },
@@ -47,6 +47,7 @@ let currentDraw = null;
 let implicationVisible = false;
 let lastFocusedElement = null;
 let selectedActivityCategories = new Set();
+let randomizedMatchingIds = [];
 
 const elements = {};
 
@@ -65,6 +66,7 @@ function cacheElements() {
   elements.gameStatus = document.querySelector("#game-status");
   elements.backofficeMessage = document.querySelector("#backoffice-message");
   elements.drawPairButton = document.querySelector("#draw-pair-button");
+  elements.drawButtons = document.querySelectorAll("#draw-pair-button, [data-draw-proxy]");
   elements.resetSessionButton = document.querySelector("#reset-session-button");
   elements.showImplicationButton = document.querySelector("#show-implication-button");
   elements.implicationModal = document.querySelector("#implication-modal");
@@ -150,8 +152,11 @@ function validateOrFallback() {
   }
 }
 
-function updateAllViews() {
+function updateAllViews({ resetDrawOrder = false } = {}) {
   syncSelectedActivityCategories();
+  if (resetDrawOrder || randomizedMatchingIds.length === 0) {
+    resetDrawOrderForSession();
+  }
   renderHomeCategorySelector();
   renderGame();
   renderBackoffice();
@@ -183,6 +188,38 @@ function syncSelectedActivityCategories() {
   if (selectedActivityCategories.size === 0 && availableCategories.length > 0) {
     selectedActivityCategories = new Set(availableCategories);
   }
+}
+
+function resetGameSessionState() {
+  playedMatchingIds = new Set();
+  currentDraw = null;
+  resetDrawOrderForSession();
+}
+
+function resetDrawOrderForSession() {
+  randomizedMatchingIds = shuffleArray(getEligibleMatchings().map((matching) => matching.id));
+}
+
+function syncDrawOrderWithEligibleMatchings(eligibleMatchings) {
+  const eligibleMatchingIds = new Set(eligibleMatchings.map((matching) => matching.id));
+  randomizedMatchingIds = randomizedMatchingIds.filter((matchingId) => eligibleMatchingIds.has(matchingId));
+  const queuedMatchingIds = new Set(randomizedMatchingIds);
+  const missingMatchingIds = eligibleMatchings
+    .map((matching) => matching.id)
+    .filter((matchingId) => !queuedMatchingIds.has(matchingId));
+
+  if (missingMatchingIds.length > 0) {
+    randomizedMatchingIds = randomizedMatchingIds.concat(shuffleArray(missingMatchingIds));
+  }
+}
+
+function shuffleArray(items) {
+  const shuffledItems = items.slice();
+  for (let index = shuffledItems.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffledItems[index], shuffledItems[randomIndex]] = [shuffledItems[randomIndex], shuffledItems[index]];
+  }
+  return shuffledItems;
 }
 
 function renderHomeCategorySelector() {
@@ -222,8 +259,7 @@ function selectAllActivityCategories() {
 }
 
 function resetSessionAfterCategoryChange() {
-  playedMatchingIds = new Set();
-  currentDraw = null;
+  resetGameSessionState();
   closeImplication(false);
   setGameMessage("La sélection de catégories a été mise à jour. Vous pouvez piocher une nouvelle paire.", "success");
   renderHomeCategorySelector();
@@ -232,7 +268,11 @@ function resetSessionAfterCategoryChange() {
 
 function drawPair() {
   const eligibleMatchings = getEligibleMatchings();
-  const remainingMatchings = eligibleMatchings.filter((matching) => !playedMatchingIds.has(matching.id));
+  const eligibleMatchingById = new Map(eligibleMatchings.map((matching) => [matching.id, matching]));
+  syncDrawOrderWithEligibleMatchings(eligibleMatchings);
+  const remainingMatchings = randomizedMatchingIds
+    .map((matchingId) => eligibleMatchingById.get(matchingId))
+    .filter((matching) => matching && !playedMatchingIds.has(matching.id));
   closeImplication(false);
 
   if (eligibleMatchings.length === 0) {
@@ -249,7 +289,7 @@ function drawPair() {
     return;
   }
 
-  const matching = remainingMatchings[Math.floor(Math.random() * remainingMatchings.length)];
+  const matching = remainingMatchings[0];
   playedMatchingIds.add(matching.id);
   currentDraw = {
     matching,
@@ -261,8 +301,7 @@ function drawPair() {
 }
 
 function resetSession() {
-  playedMatchingIds = new Set();
-  currentDraw = null;
+  resetGameSessionState();
   closeImplication(false);
   setGameMessage("Session réinitialisée. Vous pouvez piocher une nouvelle paire.", "success");
   renderGame();
@@ -295,7 +334,9 @@ function renderGame() {
   const eligibleMatchings = getEligibleMatchings();
   const remainingCount = eligibleMatchings.filter((matching) => !playedMatchingIds.has(matching.id)).length;
 
-  elements.drawPairButton.disabled = remainingCount === 0;
+  elements.drawButtons.forEach((button) => {
+    button.disabled = remainingCount === 0;
+  });
   elements.showImplicationButton.disabled = !currentDraw;
 
   if (!currentDraw) {
@@ -461,10 +502,9 @@ function saveMatching(event) {
 
 function afterConfigChange(message) {
   appConfig.updatedAt = new Date().toISOString();
-  playedMatchingIds = new Set();
-  currentDraw = null;
+  resetGameSessionState();
   setBackofficeMessage(message, "success");
-  updateAllViews();
+  updateAllViews({ resetDrawOrder: true });
 }
 
 function upsert(collection, item) {
@@ -554,10 +594,9 @@ function importConfig(event) {
         throw new Error(validation.errors.join(" "));
       }
       appConfig = normalizeConfig(parsedConfig);
-      playedMatchingIds = new Set();
-      currentDraw = null;
+      resetGameSessionState();
       setBackofficeMessage("Configuration importée avec succès.", "success");
-      updateAllViews();
+      updateAllViews({ resetDrawOrder: true });
     } catch (error) {
       setBackofficeMessage(`JSON invalide : ${error.message}. La configuration actuelle est conservée.`, "error");
     } finally {

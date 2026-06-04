@@ -43,26 +43,14 @@
 
           <div class="game-table" aria-label="Table de jeu">
             <div class="deck-rail deck-rail-left">
-              <button id="draw-pair-button" class="deck-card principle-deck" type="button">
-                <span class="deck-card-corner">P</span>
-                <span class="deck-label">Pioche Principes</span>
+              <button id="draw-pair-button" class="deck-card activity-deck" type="button">
+                <span class="deck-card-corner">A</span>
+                <span class="deck-label">Pioche Activités</span>
                 <span class="deck-hint">Cliquer pour piocher</span>
               </button>
             </div>
 
             <div class="drawn-area" aria-live="polite">
-              <article class="flip-card" id="principle-card">
-                <div class="flip-card-inner">
-                  <div class="flip-card-face flip-card-back">
-                    <strong>Principe</strong>
-                  </div>
-                  <div class="flip-card-face flip-card-front">
-                    <p class="card-kicker">Principe</p>
-                    <h3 id="principle-card-title">Aucun tirage</h3>
-                    <p id="principle-card-description">Piochez une paire pour révéler un principe.</p>
-                  </div>
-                </div>
-              </article>
               <article class="flip-card" id="activity-card">
                 <div class="flip-card-inner">
                   <div class="flip-card-face flip-card-back">
@@ -75,12 +63,24 @@
                   </div>
                 </div>
               </article>
+              <article class="flip-card" id="principle-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-face flip-card-back">
+                    <strong>Principe</strong>
+                  </div>
+                  <div class="flip-card-face flip-card-front">
+                    <p class="card-kicker">Principe</p>
+                    <h3 id="principle-card-title">Aucun tirage</h3>
+                    <p id="principle-card-description">Piochez une paire pour révéler un principe.</p>
+                  </div>
+                </div>
+              </article>
             </div>
 
             <div class="deck-rail deck-rail-right">
-              <button class="deck-card activity-deck" type="button" data-draw-proxy>
-                <span class="deck-card-corner">A</span>
-                <span class="deck-label">Pioche Activités</span>
+              <button class="deck-card principle-deck" type="button" data-draw-proxy>
+                <span class="deck-card-corner">P</span>
+                <span class="deck-label">Pioche Principes</span>
                 <span class="deck-hint">Cliquer pour piocher</span>
               </button>
             </div>
@@ -179,7 +179,7 @@
       </main>
 
       <footer class="app-footer">
-        <span>Version <strong id="app-version">v1.0.11</strong></span>
+        <span>Version <strong id="app-version">v1.0.12</strong></span>
       </footer>
     </div>
 
